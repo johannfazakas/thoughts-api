@@ -3,6 +3,7 @@ package ro.johann.thoughts.web;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ro.johann.thoughts.model.Thought;
+import ro.johann.thoughts.persistence.ThoughtJDBCRepository;
 import ro.johann.thoughts.persistence.ThoughtRepository;
 import ro.johann.thoughts.transfer.ThoughtCreateInput;
 import ro.johann.thoughts.transfer.ThoughtOutput;
@@ -20,8 +21,8 @@ public class ThoughtController {
 
     private final ThoughtRepository thoughtRepo;
 
-    public ThoughtController(ThoughtRepository thoughtRepository) {
-        this.thoughtRepo = thoughtRepository;
+    public ThoughtController(ThoughtRepository thoughtJDBCRepository) {
+        this.thoughtRepo = thoughtJDBCRepository;
     }
 
     @PostMapping
@@ -34,7 +35,7 @@ public class ThoughtController {
 
     @GetMapping("/{thoughtId}")
     @ResponseStatus(OK)
-    public ThoughtOutput get(@PathVariable("thoughtId") Long id) {
+    public ThoughtOutput get(@PathVariable("thoughtId") Integer id) {
         log.info("get >> id >> {}", id);
         return thoughtRepo.get(id)
                 .map(ThoughtOutput::new)
