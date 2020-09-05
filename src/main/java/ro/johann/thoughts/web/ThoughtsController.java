@@ -15,19 +15,18 @@ public class ThoughtsController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public ThoughtOutput create(@RequestBody(required = false) ThoughtCreateInput request) {
+    public ThoughtOutput create(@RequestBody ThoughtCreateInput request) {
         log.info("create >> request = {}", request);
-        return getMockThought();
+        return request.getValue()
+                .map(v -> new ThoughtOutput("mock-id", v))
+                .orElseGet(() -> new ThoughtOutput("mock-id"));
     }
 
     @GetMapping("/{thoughtId}")
     @ResponseStatus(OK)
     public ThoughtOutput get(@PathVariable("thoughtId") String id) {
         log.info("get >> id >> {}", id);
-        return getMockThought();
-    }
-
-    private ThoughtOutput getMockThought() {
         return new ThoughtOutput("mock-id", "this is deep");
     }
+
 }
