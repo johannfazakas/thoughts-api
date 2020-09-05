@@ -7,21 +7,32 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.client.HttpServerErrorException;
 import ro.johann.thoughts.model.Thought;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
 @Repository
+@Primary
 public class ThoughtJPARepository implements ThoughtRepository {
+
+    private final EntityManager entityManager;
+
+    public ThoughtJPARepository(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
 
     @Override
     public Thought create(Thought thought) {
-        throw new RuntimeException("not implemented.");
+        entityManager.persist(thought);
+        return thought;
+//        throw new RuntimeException("not implemented.");
     }
 
     @Override
     public Optional<Thought> get(Integer id) {
-        throw new RuntimeException("not implemented.");
+        return Optional.ofNullable(entityManager.find(Thought.class, id));
+//        throw new RuntimeException("not implemented.");
     }
 
     @Override

@@ -13,7 +13,6 @@ import java.util.Optional;
 
 @Slf4j
 @Repository
-@Primary
 public class ThoughtJDBCRepository implements ThoughtRepository {
 
     @PostConstruct
@@ -90,7 +89,7 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
     }
 
     private Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:h2:mem:thoughtsDB");
+        return DriverManager.getConnection("jdbc:h2:mem:~/thoughtsDB");
     }
 
 }

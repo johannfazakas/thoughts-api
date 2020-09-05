@@ -1,0 +1,1 @@
+CREATE TABLE thought (thought_id INT NOT NULL AUTO_INCREMENT, thought_title VARCHAR(255), PRIMARY KEY (thought_id))

@@ -6,12 +6,19 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 @Getter
 @ToString
 @EqualsAndHashCode
 @Slf4j
+@Entity
 public class Thought {
 
+    @Id
     private final Integer id;
     private final String value;
 
@@ -21,7 +28,7 @@ public class Thought {
     }
 
     public Thought(String value) {
-        this.id = null;
+        this.id = 1;
         this.value = value;
     }
 
