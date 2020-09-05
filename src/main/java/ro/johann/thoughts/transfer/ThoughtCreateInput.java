@@ -2,14 +2,13 @@ package ro.johann.thoughts.transfer;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import ro.johann.thoughts.model.Thought;
 
 import java.util.Optional;
 
 import static java.util.Optional.ofNullable;
-
 import static lombok.AccessLevel.PRIVATE;
 
 @FieldDefaults(level = PRIVATE, makeFinal = true)
@@ -26,5 +25,9 @@ public class ThoughtCreateInput {
 
     public Optional<String> getValue() {
         return ofNullable(value);
+    }
+
+    public Thought toModel() {
+        return new Thought(value);
     }
 }

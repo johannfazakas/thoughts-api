@@ -4,28 +4,28 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.FieldDefaults;
+import ro.johann.thoughts.model.Thought;
 
 import java.util.Optional;
 
 import static lombok.AccessLevel.PRIVATE;
 import static java.util.Optional.ofNullable;
 
-@FieldDefaults(level = PRIVATE, makeFinal = true)
 @ToString
 @EqualsAndHashCode
 public class ThoughtOutput {
     @Getter
-    String id;
-    String value;
+    private final Integer id;
+    private final String value;
 
-    public ThoughtOutput(String id, String value) {
-        this.id = id;
-        this.value = value;
+    public ThoughtOutput(Thought thought) {
+        this.id = thought.getId();
+        this.value = thought.getValue();
     }
 
-    public ThoughtOutput(String id) {
+    public ThoughtOutput(Integer id, String value) {
         this.id = id;
-        this.value = null;
+        this.value = value;
     }
 
     public Optional<String> getValue() {
