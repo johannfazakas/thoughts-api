@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public class ThoughtJDBCRepository implements ThoughtRepository {
 
-    @PostConstruct
+//    @PostConstruct
     public void init() throws SQLException {
         log.info("init >>");
         String query = "DROP TABLE IF EXISTS thought; " +
@@ -35,7 +35,7 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                return thought.withId(resultSet.getInt(1));
+                return new Thought(resultSet.getLong(1), thought.getValue());
             }
             return thought;
         } catch (SQLException exception) {
@@ -45,17 +45,17 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
     }
 
     @Override
-    public Optional<Thought> get(Integer thought_id) {
-        log.info("get >> thought_id = {}", thought_id);
+    public Optional<Thought> get(Long id) {
+        log.info("get >> thought_id = {}", id);
 
         String query = "SELECT thought_id, thought_title FROM thought WHERE thought_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
-            statement.setLong(1, thought_id);
+            statement.setLong(1, id);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 log.info("resultSet >> {}", resultSet);
                 Thought value = new Thought(
-                        resultSet.getInt(1),
+                        resultSet.getLong(1),
                         resultSet.getString(2)
                 );
                 log.info("got thought {}", value);
@@ -77,7 +77,7 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             List<Thought> thoughts = new ArrayList<>();
             while (resultSet.next()) {
                 thoughts.add(new Thought(
-                    resultSet.getInt("thought_id"),
+                    resultSet.getLong("thought_id"),
                     resultSet.getString("thought_title")
                 ));
             }

@@ -11,11 +11,11 @@ import java.util.Optional;
 import static lombok.AccessLevel.PRIVATE;
 import static java.util.Optional.ofNullable;
 
+@Getter
 @ToString
 @EqualsAndHashCode
 public class ThoughtOutput {
-    @Getter
-    private final Integer id;
+    private final Long id;
     private final String value;
 
     public ThoughtOutput(Thought thought) {
@@ -23,13 +23,5 @@ public class ThoughtOutput {
         this.value = thought.getValue();
     }
 
-    public ThoughtOutput(Integer id, String value) {
-        this.id = id;
-        this.value = value;
-    }
-
-    public Optional<String> getValue() {
-        return ofNullable(value);
-    }
 }
 

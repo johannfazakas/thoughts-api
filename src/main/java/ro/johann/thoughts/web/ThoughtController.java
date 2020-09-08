@@ -35,8 +35,8 @@ public class ThoughtController {
 
     @GetMapping("/{thoughtId}")
     @ResponseStatus(OK)
-    public ThoughtOutput get(@PathVariable("thoughtId") Integer id) {
-        log.info("get >> id >> {}", id);
+    public ThoughtOutput get(@PathVariable("thoughtId") Long id) {
+        log.info("get >> id = {}", id);
         return thoughtRepo.get(id)
                 .map(ThoughtOutput::new)
                 .orElseThrow(() -> new RuntimeException("Thought not found"));
