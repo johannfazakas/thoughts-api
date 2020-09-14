@@ -1,33 +1,22 @@
 package ro.johann.thoughts.transfer;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 import ro.johann.thoughts.model.Thought;
 
-import java.util.Optional;
+import java.time.LocalDateTime;
 
-import static java.util.Optional.ofNullable;
-import static lombok.AccessLevel.PRIVATE;
-
-@FieldDefaults(level = PRIVATE, makeFinal = true)
+@Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 public class ThoughtCreateInput {
 
-    String value;
-
-    @JsonCreator
-    public ThoughtCreateInput(String value) {
-        this.value = value;
-    }
-
-    public Optional<String> getValue() {
-        return ofNullable(value);
-    }
+    private String value;
 
     public Thought toModel() {
-        return new Thought(value);
+        return new Thought(value, LocalDateTime.now());
     }
 }

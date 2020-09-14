@@ -1,11 +1,9 @@
 package ro.johann.thoughts.persistence;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import ro.johann.thoughts.model.Thought;
 
-import javax.annotation.PostConstruct;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +13,7 @@ import java.util.Optional;
 @Repository
 public class ThoughtJDBCRepository implements ThoughtRepository {
 
-//    @PostConstruct
+    //    @PostConstruct
     public void init() throws SQLException {
         log.info("init >>");
         String query = "DROP TABLE IF EXISTS thought; " +
@@ -35,7 +33,7 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                return new Thought(resultSet.getLong(1), thought.getValue());
+                return new Thought(resultSet.getLong(1), thought.getValue(), thought.getCreatedAt());
             }
             return thought;
         } catch (SQLException exception) {
@@ -56,7 +54,8 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
                 log.info("resultSet >> {}", resultSet);
                 Thought value = new Thought(
                         resultSet.getLong(1),
-                        resultSet.getString(2)
+                        resultSet.getString(2),
+                        null
                 );
                 log.info("got thought {}", value);
                 return Optional.of(value);
@@ -77,8 +76,9 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             List<Thought> thoughts = new ArrayList<>();
             while (resultSet.next()) {
                 thoughts.add(new Thought(
-                    resultSet.getLong("thought_id"),
-                    resultSet.getString("thought_title")
+                        resultSet.getLong("thought_id"),
+                        resultSet.getString("thought_title"),
+                        null
                 ));
             }
             return thoughts;
