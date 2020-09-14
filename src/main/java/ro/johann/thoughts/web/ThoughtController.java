@@ -8,6 +8,7 @@ import ro.johann.thoughts.transfer.ThoughtOutput;
 
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
@@ -26,20 +27,22 @@ public class ThoughtController {
     @ResponseStatus(CREATED)
     public ThoughtOutput create(@RequestBody ThoughtCreateInput input) {
         log.info("create >> input = {}", input);
-        return thoughtService.create(input);
+        return new ThoughtOutput(thoughtService.create(input));
     }
 
     @GetMapping("/{thoughtId}")
     @ResponseStatus(OK)
     public ThoughtOutput get(@PathVariable("thoughtId") String id) {
         log.info("get >> id = {}", id);
-        return thoughtService.get(id);
+        return new ThoughtOutput(thoughtService.get(id));
     }
 
     @GetMapping
     @ResponseStatus(OK)
     public List<ThoughtOutput> list() {
         log.info("list >>");
-        return thoughtService.list();
+        return thoughtService.list().stream()
+                .map(ThoughtOutput::new)
+                .collect(toList());
     }
 }

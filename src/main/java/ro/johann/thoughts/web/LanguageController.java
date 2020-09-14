@@ -23,13 +23,13 @@ public class LanguageController {
     @ResponseStatus(HttpStatus.CREATED)
     public LanguageOutput create(@RequestBody LanguageCreateInput input) {
         log.info("create >> input = {}", input);
-        return languageService.create(input);
+        return new LanguageOutput(languageService.create(input));
     }
 
     @GetMapping("/{languageId}")
     @ResponseStatus(HttpStatus.OK)
     public LanguageOutput get(@PathVariable("languageId") String id) {
         log.info("get >> id = {}", id);
-        return languageService.get(id);
+        return new LanguageOutput(languageService.get(id));
     }
 }

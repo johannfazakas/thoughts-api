@@ -33,7 +33,12 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                return new Thought(resultSet.getString(1), thought.getValue(), thought.getCreatedAt());
+                return Thought.builder()
+                        .id(resultSet.getString(1))
+                        .value(thought.getValue())
+                        .language(thought.getLanguage())
+                        .createdAt(thought.getCreatedAt())
+                        .build();
             }
             return thought;
         } catch (SQLException exception) {
@@ -52,13 +57,12 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 log.info("resultSet >> {}", resultSet);
-                Thought value = new Thought(
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        null
-                );
-                log.info("got thought {}", value);
-                return Optional.of(value);
+                Thought thought = Thought.builder()
+                        .id(resultSet.getString(1))
+                        .value(resultSet.getString(2))
+                        .build();
+                log.info("got thought {}", thought);
+                return Optional.of(thought);
             }
             return Optional.empty();
         } catch (SQLException exception) {
@@ -75,11 +79,10 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             ResultSet resultSet = statement.executeQuery();
             List<Thought> thoughts = new ArrayList<>();
             while (resultSet.next()) {
-                thoughts.add(new Thought(
-                        resultSet.getString("thought_id"),
-                        resultSet.getString("thought_title"),
-                        null
-                ));
+                thoughts.add(Thought.builder()
+                        .id(resultSet.getString("thought_id"))
+                        .value(resultSet.getString("value"))
+                        .build());
             }
             return thoughts;
         } catch (SQLException exception) {

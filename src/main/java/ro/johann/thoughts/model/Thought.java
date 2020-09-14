@@ -1,16 +1,17 @@
 package ro.johann.thoughts.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @NoArgsConstructor
+@AllArgsConstructor(access = PRIVATE)
 @Getter
+@Builder
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -26,15 +27,6 @@ public class Thought {
     private String value;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    public Thought(String id, String value, LocalDateTime createdAt) {
-        this.id = id;
-        this.value = value;
-        this.createdAt = createdAt;
-    }
-
-    public Thought(String value, LocalDateTime createdAt) {
-        this.value = value;
-        this.createdAt = createdAt;
-    }
+    @ManyToOne
+    private Language language;
 }
