@@ -25,6 +25,7 @@ public class ThoughtJPARepository implements ThoughtRepository {
 
     @Override
     public Thought create(Thought thought) {
+        log.info("create >> thought = {}", thought);
         transaction.begin();
         entityManager.persist(thought);
         transaction.commit();
@@ -33,6 +34,7 @@ public class ThoughtJPARepository implements ThoughtRepository {
 
     @Override
     public Optional<Thought> get(String id) {
+        log.info("get >> id = {}", id);
         return Optional.ofNullable(entityManager.find(Thought.class, id));
     }
 
