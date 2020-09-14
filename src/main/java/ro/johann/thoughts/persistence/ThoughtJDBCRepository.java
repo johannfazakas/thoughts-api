@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Repository
@@ -33,7 +34,7 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                return new Thought(resultSet.getLong(1), thought.getValue(), thought.getCreatedAt());
+                return new Thought(resultSet.getString(1), thought.getValue(), thought.getCreatedAt());
             }
             return thought;
         } catch (SQLException exception) {
@@ -43,17 +44,17 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
     }
 
     @Override
-    public Optional<Thought> get(Long id) {
+    public Optional<Thought> get(String id) {
         log.info("get >> thought_id = {}", id);
 
         String query = "SELECT thought_id, thought_title FROM thought WHERE thought_id = ?";
         try (PreparedStatement statement = getConnection().prepareStatement(query)) {
-            statement.setLong(1, id);
+            statement.setString(1, id.toString());
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 log.info("resultSet >> {}", resultSet);
                 Thought value = new Thought(
-                        resultSet.getLong(1),
+                        resultSet.getString(1),
                         resultSet.getString(2),
                         null
                 );
@@ -76,7 +77,7 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             List<Thought> thoughts = new ArrayList<>();
             while (resultSet.next()) {
                 thoughts.add(new Thought(
-                        resultSet.getLong("thought_id"),
+                        resultSet.getString("thought_id"),
                         resultSet.getString("thought_title"),
                         null
                 ));

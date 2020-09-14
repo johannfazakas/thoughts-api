@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface ThoughtRepository {
     Thought create(Thought thought);
-    Optional<Thought> get(Long id);
+    Optional<Thought> get(String id);
     List<Thought> list();
 }

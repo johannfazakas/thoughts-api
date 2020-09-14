@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 @EqualsAndHashCode
 public class ThoughtOutput {
-    private final Long id;
+    private final String id;
     private final String value;
     private final LocalDateTime createdAt;
 

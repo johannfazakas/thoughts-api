@@ -35,7 +35,7 @@ public class ThoughtController {
 
     @GetMapping("/{thoughtId}")
     @ResponseStatus(OK)
-    public ThoughtOutput get(@PathVariable("thoughtId") Long id) {
+    public ThoughtOutput get(@PathVariable("thoughtId") String id) {
         log.info("get >> id = {}", id);
         return thoughtRepo.get(id)
                 .map(ThoughtOutput::new)

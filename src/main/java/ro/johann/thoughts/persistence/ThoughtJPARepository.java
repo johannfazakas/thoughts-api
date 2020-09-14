@@ -32,7 +32,7 @@ public class ThoughtJPARepository implements ThoughtRepository {
     }
 
     @Override
-    public Optional<Thought> get(Long id) {
+    public Optional<Thought> get(String id) {
         return Optional.ofNullable(entityManager.find(Thought.class, id));
     }
 

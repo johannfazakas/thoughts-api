@@ -4,11 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-
-import static javax.persistence.GenerationType.AUTO;
 
 @NoArgsConstructor
 @Getter
@@ -19,13 +18,14 @@ import static javax.persistence.GenerationType.AUTO;
 public class Thought {
 
     @Id
-    @GeneratedValue(strategy = AUTO)
-    private Long id;
+    @GeneratedValue(generator="uuid")
+    @GenericGenerator(name="uuid", strategy = "uuid2")
+    private String id;
     private String value;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public Thought(Long id, String value, LocalDateTime createdAt) {
+    public Thought(String id, String value, LocalDateTime createdAt) {
         this.id = id;
         this.value = value;
         this.createdAt = createdAt;
