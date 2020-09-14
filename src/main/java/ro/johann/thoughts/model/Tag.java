@@ -2,19 +2,19 @@ package ro.johann.thoughts.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
+@Entity
+@Table(name = "tag")
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
-@Entity
-@Table(name = "language")
-public class Language {
+public class Tag {
 
     @Id
     @GeneratedValue(generator="uuid")
@@ -24,7 +24,7 @@ public class Language {
     @Column(length = 55)
     private String name;
 
-    public Language(String name) {
+    public Tag(String name) {
         this.name = name;
     }
 }

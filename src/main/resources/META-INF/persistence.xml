@@ -7,6 +7,7 @@
         <description>thoughts hibernate persistence unit</description>
         <class>ro.johann.thoughts.model.Thought</class>
         <class>ro.johann.thoughts.model.Language</class>
+        <class>ro.johann.thoughts.model.Tag</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL55Dialect"/>
