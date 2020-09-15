@@ -15,10 +15,12 @@ public class ThoughtService {
 
     private final ThoughtRepository thoughtRepo;
     private final LanguageService languageService;
+    private final TagService tagService;
 
-    public ThoughtService(ThoughtRepository thoughtRepo, LanguageService languageService) {
+    public ThoughtService(ThoughtRepository thoughtRepo, LanguageService languageService, TagService tagService) {
         this.thoughtRepo = thoughtRepo;
         this.languageService = languageService;
+        this.tagService = tagService;
     }
 
     public Thought create(ThoughtCreateInput input) {
@@ -27,6 +29,7 @@ public class ThoughtService {
         Thought thought = Thought.builder()
                 .value(input.getValue())
                 .language(languageService.get(input.getLanguageId()))
+                .tags(tagService.list(input.getTagIds()))
                 .createdAt(LocalDateTime.now())
                 .build();
         return thoughtRepo.create(thought);

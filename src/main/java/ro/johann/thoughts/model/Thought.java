@@ -5,6 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -29,4 +30,9 @@ public class Thought {
     private LocalDateTime createdAt;
     @ManyToOne
     private Language language;
+    @ManyToMany
+    @JoinTable(name = "thought_tag",
+            joinColumns = @JoinColumn(name = "thought_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
 }

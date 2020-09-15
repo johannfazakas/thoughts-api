@@ -6,6 +6,10 @@ import ro.johann.thoughts.model.Tag;
 import ro.johann.thoughts.persistence.TagRepository;
 import ro.johann.thoughts.transfer.TagCreateInput;
 
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
+
 @Service
 @Slf4j
 public class TagService {
@@ -24,5 +28,16 @@ public class TagService {
     public Tag get(String id) {
         log.info("get >> id = {}", id);
         return tagRepo.get(id).orElseThrow(() -> new RuntimeException("Tag not found."));
+    }
+
+    public Set<Tag> list(Set<String> ids) {
+        log.info("list >> ids = {}", ids);
+        if (ids.isEmpty()) {
+            return Set.of();
+        }
+        // TODO implement with single call
+        return ids.stream()
+                .map(this::get)
+                .collect(toSet());
     }
 }
