@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ThoughtRepository {
-    Thought create(Thought thought);
+    Thought save(Thought thought);
     Optional<Thought> get(String id);
     List<Thought> list();
 }

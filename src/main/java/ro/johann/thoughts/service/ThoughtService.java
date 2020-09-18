@@ -2,8 +2,10 @@ package ro.johann.thoughts.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ro.johann.thoughts.model.Comment;
 import ro.johann.thoughts.model.Thought;
 import ro.johann.thoughts.persistence.ThoughtRepository;
+import ro.johann.thoughts.transfer.CommentCreateInput;
 import ro.johann.thoughts.transfer.ThoughtCreateInput;
 
 import java.time.LocalDateTime;
@@ -26,13 +28,13 @@ public class ThoughtService {
     public Thought create(ThoughtCreateInput input) {
         log.info("create >> input = {}", input);
 
-        Thought thought = Thought.builder()
+        var thought = Thought.builder()
                 .value(input.getValue())
                 .language(languageService.get(input.getLanguageId()))
                 .tags(tagService.list(input.getTagIds()))
                 .createdAt(LocalDateTime.now())
                 .build();
-        return thoughtRepo.create(thought);
+        return thoughtRepo.save(thought);
     }
 
     public Thought get(String id) {
@@ -44,5 +46,25 @@ public class ThoughtService {
     public List<Thought> list() {
         log.info("list >>");
         return thoughtRepo.list();
+    }
+
+    public Comment addComment(String thoughtId, CommentCreateInput input) {
+        log.info("addComment >> thoughtId = {}, input = {}", thoughtId, input);
+        var comment = input.toModel();
+        thoughtRepo.get(thoughtId)
+                .map(t -> t.withComment(comment))
+                .ifPresentOrElse(thoughtRepo::save, this::throwNotFound);
+        return comment;
+    }
+
+    public void deleteComment(String thoughtId, String commentId) {
+        log.info("deleteComment >> thoughtId = {}, commentId = {}", thoughtId, commentId);
+        thoughtRepo.get(thoughtId)
+                .map(t -> t.withoutComment(commentId))
+                .ifPresentOrElse(thoughtRepo::save, this::throwNotFound);
+    }
+
+    private void throwNotFound() {
+        throw new RuntimeException("Thought could not be found.");
     }
 }

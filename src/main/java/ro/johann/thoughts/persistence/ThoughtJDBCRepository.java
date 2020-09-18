@@ -24,7 +24,7 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
     }
 
     @Override
-    public Thought create(Thought thought) {
+    public Thought save(Thought thought) {
         log.info("create >> thought = {}", thought);
 
         String query = "INSERT INTO THOUGHT (thought_title) VALUES (?)";

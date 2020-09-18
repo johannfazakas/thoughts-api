@@ -24,7 +24,7 @@ public class ThoughtJPARepository implements ThoughtRepository {
     }
 
     @Override
-    public Thought create(Thought thought) {
+    public Thought save(Thought thought) {
         log.info("create >> thought = {}", thought);
         transaction.begin();
         entityManager.persist(thought);
