@@ -3,6 +3,7 @@ package ro.johann.thoughts.web;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import ro.johann.thoughts.service.ThoughtService;
+import ro.johann.thoughts.transfer.ListOutput;
 import ro.johann.thoughts.transfer.ThoughtCreateInput;
 import ro.johann.thoughts.transfer.ThoughtOutput;
 
@@ -39,10 +40,11 @@ public class ThoughtController {
 
     @GetMapping
     @ResponseStatus(OK)
-    public List<ThoughtOutput> list() {
+    public ListOutput<ThoughtOutput> list() {
         log.info("list >>");
-        return thoughtService.list().stream()
+        List<ThoughtOutput> thoughts = thoughtService.list().stream()
                 .map(ThoughtOutput::new)
                 .collect(toList());
+        return new ListOutput<>(thoughts, thoughts.size());
     }
 }
