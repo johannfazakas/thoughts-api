@@ -11,7 +11,7 @@
     <groupId>ro.johann</groupId>
     <artifactId>thoughts</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>thoughts-spring-api</name>
+    <name>thoughts-api</name>
     <description>Spring Service to remember what I would not want to forget</description>
 
     <properties>

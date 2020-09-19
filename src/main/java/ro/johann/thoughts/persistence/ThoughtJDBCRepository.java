@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Slf4j
 @Repository
-public class ThoughtJDBCRepository implements ThoughtRepository {
+public class ThoughtJDBCRepository {
 
     //    @PostConstruct
     public void init() throws SQLException {
@@ -23,7 +23,6 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
         }
     }
 
-    @Override
     public Thought save(Thought thought) {
         log.info("create >> thought = {}", thought);
 
@@ -45,7 +44,6 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
         }
     }
 
-    @Override
     public Optional<Thought> get(String id) {
         log.info("get >> thought_id = {}", id);
 
