@@ -8,10 +8,15 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.FetchType.EAGER;
 import static lombok.AccessLevel.PRIVATE;
 
+@Entity
+@Table(name = "thought")
+@NamedQueries({
+        @NamedQuery(name = "Thought_getAll", query = "select t from Thought t")
+})
 @NoArgsConstructor
 @AllArgsConstructor(access = PRIVATE)
 @Getter
@@ -19,8 +24,6 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @ToString
 @EqualsAndHashCode
-@Entity
-@Table(name = "thought")
 public class Thought {
 
     @Id

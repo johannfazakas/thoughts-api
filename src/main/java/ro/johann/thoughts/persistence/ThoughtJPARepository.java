@@ -7,6 +7,7 @@ import ro.johann.thoughts.model.Thought;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,8 @@ public class ThoughtJPARepository implements ThoughtRepository {
 
     @Override
     public List<Thought> list() {
-        throw new RuntimeException("not implemented.");
+        log.info("list >>");
+        TypedQuery<Thought> query = entityManager.createNamedQuery("Thought_getAll", Thought.class);
+        return query.getResultList();
     }
 }
