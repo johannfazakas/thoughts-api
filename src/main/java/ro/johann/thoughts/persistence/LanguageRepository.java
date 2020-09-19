@@ -5,27 +5,21 @@ import org.springframework.stereotype.Repository;
 import ro.johann.thoughts.model.Language;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
 @Slf4j
 public class LanguageRepository {
 
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    private final EntityManager entityManager;
-    private final EntityTransaction transaction;
-
-    public LanguageRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        this.transaction = entityManager.getTransaction();
-    }
-
+    @Transactional
     public Language create(Language language) {
         log.info("create >> language = {}", language);
-        transaction.begin();
         entityManager.persist(language);
-        transaction.commit();
         return language;
     }
 

@@ -6,8 +6,9 @@ import org.springframework.stereotype.Repository;
 import ro.johann.thoughts.model.Thought;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,19 +17,13 @@ import java.util.Optional;
 @Primary
 public class ThoughtRepository {
 
-    private final EntityManager entityManager;
-    private final EntityTransaction transaction;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public ThoughtRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        this.transaction = entityManager.getTransaction();
-    }
-
+    @Transactional
     public Thought save(Thought thought) {
         log.info("create >> thought = {}", thought);
-        transaction.begin();
         entityManager.persist(thought);
-        transaction.commit();
         return thought;
     }
 

@@ -1,15 +1,13 @@
 package ro.johann.thoughts.model;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "tag")
+@NoArgsConstructor
 @Getter
 @Setter
 @ToString(callSuper = true)

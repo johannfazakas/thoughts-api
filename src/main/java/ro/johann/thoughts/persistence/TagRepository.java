@@ -5,26 +5,21 @@ import org.springframework.stereotype.Repository;
 import ro.johann.thoughts.model.Tag;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
 @Slf4j
 public class TagRepository {
 
-    private final EntityManager entityManager;
-    private final EntityTransaction entityTransaction;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    public TagRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-        this.entityTransaction = entityManager.getTransaction();
-    }
-
+    @Transactional
     public Tag create(Tag tag) {
         log.info("create >> tag = {}", tag);
-        entityTransaction.begin();
         entityManager.persist(tag);
-        entityTransaction.commit();
         return tag;
     }
 
