@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@Repository
-@Primary
 public class ThoughtRepository {
 
     @PersistenceContext

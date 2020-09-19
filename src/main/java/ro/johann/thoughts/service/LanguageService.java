@@ -3,7 +3,7 @@ package ro.johann.thoughts.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ro.johann.thoughts.model.Language;
-import ro.johann.thoughts.persistence.jpa.LanguageRepository;
+import ro.johann.thoughts.persistence.data.LanguageRepository;
 import ro.johann.thoughts.transfer.LanguageCreateInput;
 
 @Service
@@ -18,12 +18,12 @@ public class LanguageService {
 
     public Language create(LanguageCreateInput input) {
         log.info("create >> input = {}", input);
-        return languageRepo.create(input.toModel());
+        return languageRepo.save(input.toModel());
     }
 
     public Language get(String id) {
         log.info("get >> id = {}", id);
-        return languageRepo.get(id)
+        return languageRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Language not found"));
     }
 }

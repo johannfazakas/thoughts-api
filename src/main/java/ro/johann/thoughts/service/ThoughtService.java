@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ro.johann.thoughts.model.Comment;
 import ro.johann.thoughts.model.Thought;
-import ro.johann.thoughts.persistence.jpa.ThoughtRepository;
+import ro.johann.thoughts.persistence.data.ThoughtRepository;
 import ro.johann.thoughts.transfer.CommentCreateInput;
 import ro.johann.thoughts.transfer.ThoughtCreateInput;
 
@@ -38,19 +38,19 @@ public class ThoughtService {
 
     public Thought get(String id) {
         log.info("get >> input = {}", id);
-        return thoughtRepo.get(id)
+        return thoughtRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Thought not found"));
     }
 
     public List<Thought> list() {
         log.info("list >>");
-        return thoughtRepo.list();
+        return thoughtRepo.findAll();
     }
 
     public Comment addComment(String thoughtId, CommentCreateInput input) {
         log.info("addComment >> thoughtId = {}, input = {}", thoughtId, input);
         var comment = input.toModel();
-        thoughtRepo.get(thoughtId)
+        thoughtRepo.findById(thoughtId)
                 .map(t -> t.withComment(comment))
                 .ifPresentOrElse(thoughtRepo::save, this::throwNotFound);
         return comment;
@@ -58,7 +58,7 @@ public class ThoughtService {
 
     public void deleteComment(String thoughtId, String commentId) {
         log.info("deleteComment >> thoughtId = {}, commentId = {}", thoughtId, commentId);
-        thoughtRepo.get(thoughtId)
+        thoughtRepo.findById(thoughtId)
                 .map(t -> t.withoutComment(commentId))
                 .ifPresentOrElse(thoughtRepo::save, this::throwNotFound);
     }

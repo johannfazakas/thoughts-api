@@ -3,7 +3,7 @@ package ro.johann.thoughts.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ro.johann.thoughts.model.Tag;
-import ro.johann.thoughts.persistence.jpa.TagRepository;
+import ro.johann.thoughts.persistence.data.TagRepository;
 import ro.johann.thoughts.transfer.TagCreateInput;
 
 import java.util.Set;
@@ -22,12 +22,13 @@ public class TagService {
 
     public Tag create(TagCreateInput input) {
         log.info("create >> input = {}", input);
-        return tagRepo.create(input.toModel());
+        return tagRepo.save(input.toModel());
     }
 
     public Tag get(String id) {
         log.info("get >> id = {}", id);
-        return tagRepo.get(id).orElseThrow(() -> new RuntimeException("Tag not found."));
+        return tagRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tag not found."));
     }
 
     public Set<Tag> list(Set<String> ids) {
