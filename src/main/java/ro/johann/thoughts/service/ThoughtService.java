@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ro.johann.thoughts.model.Comment;
 import ro.johann.thoughts.model.Thought;
-import ro.johann.thoughts.persistence.ThoughtRepository;
+import ro.johann.thoughts.persistence.jpa.ThoughtRepository;
 import ro.johann.thoughts.transfer.CommentCreateInput;
 import ro.johann.thoughts.transfer.ThoughtCreateInput;
 

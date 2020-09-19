@@ -3,7 +3,7 @@ package ro.johann.thoughts.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ro.johann.thoughts.model.Tag;
-import ro.johann.thoughts.persistence.TagRepository;
+import ro.johann.thoughts.persistence.jpa.TagRepository;
 import ro.johann.thoughts.transfer.TagCreateInput;
 
 import java.util.Set;

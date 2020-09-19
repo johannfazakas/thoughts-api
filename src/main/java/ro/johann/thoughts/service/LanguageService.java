@@ -3,7 +3,7 @@ package ro.johann.thoughts.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ro.johann.thoughts.model.Language;
-import ro.johann.thoughts.persistence.LanguageRepository;
+import ro.johann.thoughts.persistence.jpa.LanguageRepository;
 import ro.johann.thoughts.transfer.LanguageCreateInput;
 
 @Service

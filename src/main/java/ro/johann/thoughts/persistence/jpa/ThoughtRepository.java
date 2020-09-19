@@ -1,4 +1,4 @@
-package ro.johann.thoughts.persistence;
+package ro.johann.thoughts.persistence.jpa;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
