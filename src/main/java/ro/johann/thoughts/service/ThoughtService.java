@@ -28,12 +28,11 @@ public class ThoughtService {
     public Thought create(ThoughtCreateInput input) {
         log.info("create >> input = {}", input);
 
-        var thought = Thought.builder()
-                .value(input.getValue())
-                .language(languageService.get(input.getLanguageId()))
-                .tags(tagService.list(input.getTagIds()))
-                .createdAt(LocalDateTime.now())
-                .build();
+        var thought = new Thought();
+        thought.setValue(input.getValue());
+        thought.setLanguage(languageService.get(input.getLanguageId()));
+        thought.setTags(tagService.list(input.getTagIds()));
+        thought.setCreatedAt(LocalDateTime.now());
         return thoughtRepo.save(thought);
     }
 

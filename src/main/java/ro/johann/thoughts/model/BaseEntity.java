@@ -6,25 +6,24 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "tag")
+@MappedSuperclass
 @Getter
 @Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = true)
-public class Tag extends BaseEntity {
+@ToString
+@EqualsAndHashCode
+public abstract class BaseEntity {
 
     @Id
     @GeneratedValue(generator="uuid")
     @GenericGenerator(name="uuid", strategy = "uuid2")
     @Column(length = 36)
     private String id;
-    @Column(length = 55)
-    private String name;
-
-    public Tag(String name) {
-        this.name = name;
-    }
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }

@@ -4,23 +4,19 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@NoArgsConstructor
-@Getter
-@ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = "language")
-public class Language {
+@NoArgsConstructor
+@Getter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class Language extends BaseEntity {
 
-    @Id
-    @GeneratedValue(generator="uuid")
-    @GenericGenerator(name="uuid", strategy = "uuid2")
-    @Column(length = 36)
-    private String id;
     @Column(length = 55)
     private String name;
 

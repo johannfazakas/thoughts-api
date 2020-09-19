@@ -4,24 +4,20 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.Table;
 
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 @Entity
+@Table(name = "comment")
 @Inheritance(strategy = SINGLE_TABLE)
 @Getter
 @Setter
-@ToString
-@EqualsAndHashCode
-public abstract class Comment {
-
-    @Id
-    @GeneratedValue(generator="uuid")
-    @GenericGenerator(name="uuid", strategy = "uuid2")
-    @Column(length = 36)
-    private String id;
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public abstract class Comment extends BaseEntity {
 
 }

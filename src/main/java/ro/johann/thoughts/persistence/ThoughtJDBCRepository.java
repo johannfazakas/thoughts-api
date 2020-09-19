@@ -33,12 +33,10 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             statement.executeUpdate();
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-                return Thought.builder()
-                        .id(resultSet.getString(1))
-                        .value(thought.getValue())
-                        .language(thought.getLanguage())
-                        .createdAt(thought.getCreatedAt())
-                        .build();
+                thought.setId(resultSet.getString(1));
+                thought.setValue(thought.getValue());
+                thought.setLanguage(thought.getLanguage());
+                thought.setCreatedAt(thought.getCreatedAt());
             }
             return thought;
         } catch (SQLException exception) {
@@ -57,10 +55,9 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 log.info("resultSet >> {}", resultSet);
-                Thought thought = Thought.builder()
-                        .id(resultSet.getString(1))
-                        .value(resultSet.getString(2))
-                        .build();
+                Thought thought = new Thought();
+                thought.setId(resultSet.getString(1));
+                thought.setValue(resultSet.getString(2));
                 log.info("got thought {}", thought);
                 return Optional.of(thought);
             }
@@ -79,10 +76,10 @@ public class ThoughtJDBCRepository implements ThoughtRepository {
             ResultSet resultSet = statement.executeQuery();
             List<Thought> thoughts = new ArrayList<>();
             while (resultSet.next()) {
-                thoughts.add(Thought.builder()
-                        .id(resultSet.getString("thought_id"))
-                        .value(resultSet.getString("value"))
-                        .build());
+                var thought = new Thought();
+                thought.setId(resultSet.getString("thought_id"));
+                thought.setValue(resultSet.getString("value"));
+                thoughts.add(thought);
             }
             return thoughts;
         } catch (SQLException exception) {
